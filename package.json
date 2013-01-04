@@ -1,0 +1,53 @@
+{
+  "name": "node-document-storage",
+  "description": "Storage adapter interface for `node-document` ODM for Node.js.",
+  "version": "0.1.0",
+  "repositories": [
+    {
+     "type": "git",
+     "url": "https://github.com/grimen/node-document-storage.git"
+    }
+  ],
+  "bugs": {
+    "web": "https://github.com/grimen/node-document-storage/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/grimen/node-document-storage/blob/MIT-LICENSE"
+    }
+  ],
+  "maintainers": [
+    {
+      "name": "Jonas Grimfelt",
+      "email": "grimen@gmail.com",
+      "web": "https://github.com/grimen"
+    }
+  ],
+  "contributors": [],
+  "directories": {
+    "lib": "./lib"
+  },
+  "main": "./index.js",
+  "scripts": {
+    "test": "make test",
+    "test-ci": "make test-ci",
+    "test-remote": "make test-remote"
+  },
+  "bin": {},
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "dependencies": {
+    "funargs": "latest",
+    "sugar": "latest"
+  },
+  "devDependencies": {
+    "mocha": "latest",
+    "chai": "latest",
+    "cover": "latest",
+    "node-inspector": "latest",
+    "longjohn": "latest",
+    "colors": "latest"
+  }
+}
