@@ -40,7 +40,8 @@
   },
   "dependencies": {
     "funargs": "latest",
-    "sugar": "latest"
+    "sugar": "latest",
+    "sync": "latest"
   },
   "devDependencies": {
     "mocha": "latest",
