@@ -2,12 +2,11 @@
   "name": "node-document-storage",
   "description": "Storage adapter interface for `node-document` ODM for Node.js.",
   "version": "0.1.0",
-  "repositories": [
-    {
-     "type": "git",
-     "url": "https://github.com/grimen/node-document-storage.git"
-    }
-  ],
+  "homepage": "https://github.com/grimen/node-document-storage",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/grimen/node-document-storage.git"
+  },
   "bugs": {
     "web": "https://github.com/grimen/node-document-storage/issues"
   },
