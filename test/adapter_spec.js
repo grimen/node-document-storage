@@ -198,9 +198,7 @@ module.exports = function(name, spec) {
           '<NEW_KEY>': {
             "(<STRING_KEY>, <VALUE>)  =>  [true]": function(done) {
               storage.set('set/new-one-foo_1-a', {foo: 'bar_1'}, function(storage_err, storage_response) {
-                console.log('set/new-one-foo_1-a', {foo: 'bar_1'}, storage_err, storage_response)
                 native.get(db, 'set', 'new-one-foo_1-a', function(client_err, client_response) {
-                  console.log(client_err, client_response)
                   client_response = Array.create(client_response).map(function(doc) { return doc && pack(Object.reject(typeof doc === 'string' ? unpack(doc) : doc, meta_fields)); });
                   assert.deepEqual ( storage_response, [true] );
                   assert.deepEqual ( client_response[0], pack({foo: 'bar_1'}) );

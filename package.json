@@ -38,6 +38,9 @@
     "node": ">= 0.8.0"
   },
   "dependencies": {
+    "chai": "latest",
+    "longjohn": "latest",
+    "colors": "latest",
     "funargs": "latest",
     "sugar": "latest",
     "sync-fork-grimen": "latest"
