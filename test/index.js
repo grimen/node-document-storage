@@ -67,20 +67,14 @@ module.exports = {
     '.env': function() {
       assert.property ( Storage, 'env' );
 
-      process.env.EXAMPLE_KEY = "foo";
-      assert.deepEqual ( Storage.env('EXAMPLE_KEY'), "foo" );
+      process.env.EXAMPLE_KEY = 'foo1';
+      assert.deepEqual ( Storage.env('EXAMPLE_KEY'), 'foo1' );
 
-      process.env.NODE_DOCUMENT_ENV_PREFIX = "NODE_DOC";
+      process.env.NODE_DOCUMENT_ENV_PREFIX = 'NODE_DOC';
       assert.deepEqual ( Storage.env('EXAMPLE_KEY'), undefined );
 
-      process.env.NODE_DOC_EXAMPLE_KEY = "foo";
-      assert.deepEqual ( Storage.env('EXAMPLE_KEY'), "foo" );
-
-      Storage.env.prefix_key = "NODE_DOCUMENT";
-      assert.deepEqual ( Storage.env('EXAMPLE_KEY'), undefined );
-
-      process.env.NODE_DOCUMENT_EXAMPLE_KEY = "foo";
-      assert.deepEqual ( Storage.env('EXAMPLE_KEY'), "foo" );
+      process.env.NODE_DOC_EXAMPLE_KEY = 'foo2';
+      assert.deepEqual ( Storage.env('EXAMPLE_KEY'), 'foo2' );
     },
 
     '.name': function() {

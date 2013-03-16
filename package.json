@@ -45,7 +45,7 @@
     "colors": "latest",
     "funargs": "latest",
     "sugar": "latest",
-    "sync-fork-grimen": "latest"
+    "sync": "latest"
   },
   "devDependencies": {
     "mocha": "latest",
