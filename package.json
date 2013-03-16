@@ -1,7 +1,8 @@
 {
   "name": "node-document-storage",
   "description": "Storage adapter interface for `node-document` ODM for Node.js.",
-  "version": "0.1.0-pre2",
+  "keywords": ["document", "odm", "object document mapper", "generic", "unified", "storage", "store", "persistance", "adapter", "interface"],
+  "version": "0.1.0-pre3",
   "homepage": "https://github.com/grimen/node-document-storage",
   "repository": {
     "type": "git",
@@ -16,6 +17,7 @@
       "url": "https://github.com/grimen/node-document-storage/blob/MIT-LICENSE"
     }
   ],
+  "author": "Jonas Grimfelt <grimen@gmail.com>",
   "maintainers": [
     {
       "name": "Jonas Grimfelt",

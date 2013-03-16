@@ -64,9 +64,40 @@ module.exports = {
       assert.equal ( storage.klass, require('../lib') );
     },
 
+    '.env': function() {
+      assert.property ( Storage, 'env' );
+
+      process.env.EXAMPLE_KEY = "foo";
+      assert.deepEqual ( Storage.env('EXAMPLE_KEY'), "foo" );
+
+      process.env.NODE_DOCUMENT_ENV_PREFIX = "NODE_DOC";
+      assert.deepEqual ( Storage.env('EXAMPLE_KEY'), undefined );
+
+      process.env.NODE_DOC_EXAMPLE_KEY = "foo";
+      assert.deepEqual ( Storage.env('EXAMPLE_KEY'), "foo" );
+
+      Storage.env.prefix_key = "NODE_DOCUMENT";
+      assert.deepEqual ( Storage.env('EXAMPLE_KEY'), undefined );
+
+      process.env.NODE_DOCUMENT_EXAMPLE_KEY = "foo";
+      assert.deepEqual ( Storage.env('EXAMPLE_KEY'), "foo" );
+    },
+
     '.name': function() {
       assert.property ( Storage, 'name' );
       assert.equal ( Storage.name, 'Storage' );
+    },
+
+    '.id': function() {
+      assert.property ( Storage, 'id' );
+
+      assert.equal ( Storage.id, null );
+    },
+
+    '.protocol': function() {
+      assert.property ( Storage, 'protocol' );
+
+      assert.equal ( Storage.protocol, null );
     },
 
     '.defaults': function() {
