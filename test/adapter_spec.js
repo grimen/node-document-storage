@@ -260,7 +260,7 @@ module.exports = function(name, spec) {
           '<NEW_KEY>': {
             "(<NEW_KEY>)  =>  [null]": function(done) {
               storage.get('get/new-one-foo_1-a', function(err, storage_response) {
-                storage_response = Array.create(storage_response).map(function(doc) { return doc && Object.reject(doc, meta_fields) });
+                storage_response = Array.create(storage_response).map(function(doc) { return doc && Object.reject(doc, meta_fields); });
                 assert.deepEqual ( storage_response, [null] );
                 done();
               });
@@ -271,7 +271,7 @@ module.exports = function(name, spec) {
             "(<EXISTING_KEY>)  =>  <VALUE>": function(done) {
               spec.client.set(db, 'get', 'existing-one-foo_1-a', pack({foo: 'bar_1'}), function() {
                 storage.get('get/existing-one-foo_1-a', function(err, storage_response) {
-                  storage_response = Array.create(storage_response).map(function(doc) { return doc && Object.reject(doc, meta_fields) });
+                  storage_response = Array.create(storage_response).map(function(doc) { return doc && Object.reject(doc, meta_fields); });
                   assert.deepEqual ( storage_response, [{foo: 'bar_1'}] );
                   done();
                 });
@@ -282,7 +282,7 @@ module.exports = function(name, spec) {
           '[<NEW_KEY>]': {
             "([<NEW_KEY>])  =>  [null]": function(done) {
               storage.get(['get/new-one-foo_1-b'], function(err, storage_response) {
-                storage_response = Array.create(storage_response).map(function(doc) { return doc && Object.reject(doc, meta_fields) });
+                storage_response = Array.create(storage_response).map(function(doc) { return doc && Object.reject(doc, meta_fields); });
                 assert.deepEqual ( storage_response, [null] );
                 done();
               });
@@ -293,7 +293,7 @@ module.exports = function(name, spec) {
             "([<EXISTING_KEY>])  =>  [<VALUE>]": function(done) {
               spec.client.set(db, 'get', 'existing-one-foo_1-c', pack({foo: 'bar_1'}), function() {
                 storage.get(['get/existing-one-foo_1-c'], function(err, storage_response) {
-                  storage_response = Array.create(storage_response).map(function(doc) { return doc && Object.reject(doc, meta_fields) });
+                  storage_response = Array.create(storage_response).map(function(doc) { return doc && Object.reject(doc, meta_fields); });
                   assert.deepEqual ( storage_response, [{foo: 'bar_1'}] );
                   done();
                 });
@@ -306,7 +306,7 @@ module.exports = function(name, spec) {
           '[<NEW_KEY>, <NEW_KEY>]': {
             "([<NEW_KEY>, <NEW_KEY>])  =>  [null, null]": function(done) {
               storage.get(['get/new-many-foo_1-a', 'get/new-many-foo_2-a'], function(err, storage_response) {
-                storage_response = Array.create(storage_response).map(function(doc) { return doc && Object.reject(doc, meta_fields) });
+                storage_response = Array.create(storage_response).map(function(doc) { return doc && Object.reject(doc, meta_fields); });
                 assert.deepEqual ( storage_response, [null, null] );
                 done();
               });
@@ -317,7 +317,7 @@ module.exports = function(name, spec) {
             "([<NEW_KEY>, <EXISTING_KEY>])  =>  [null, <VALUE>]": function(done) {
               spec.client.set(db, 'get', 'existing-many-foo_1-b', pack({foo: 'bar_1'}), function() {
                 storage.get(['get/new-many-foo_1-b', 'get/existing-many-foo_1-b'], function(err, storage_response) {
-                  storage_response = Array.create(storage_response).map(function(doc) { return doc && Object.reject(doc, meta_fields) });
+                  storage_response = Array.create(storage_response).map(function(doc) { return doc && Object.reject(doc, meta_fields); });
                   assert.deepEqual ( storage_response, [null, {foo: 'bar_1'}] );
                   done();
                 });
@@ -329,7 +329,7 @@ module.exports = function(name, spec) {
             "([<EXISTING_KEY>, <NEW_KEY>])  =>  [<VALUE>, null]": function(done) {
               spec.client.set(db, 'get', 'existing-many-foo_1-c', pack({foo: 'bar_1'}), function() {
                 storage.get(['get/existing-many-foo_1-c', 'get/new-many-foo_1-c'], function(err, storage_response) {
-                  storage_response = Array.create(storage_response).map(function(doc) { return doc && Object.reject(doc, meta_fields) });
+                  storage_response = Array.create(storage_response).map(function(doc) { return doc && Object.reject(doc, meta_fields); });
                   assert.deepEqual ( storage_response, [{foo: 'bar_1'}, null] );
                   done();
                 });
@@ -342,7 +342,7 @@ module.exports = function(name, spec) {
               spec.client.set(db, 'get', 'existing-many-foo_1-d', pack({foo: 'bar_1'}), function() {
                 spec.client.set(db, 'get', 'existing-many-foo_2-d', pack({foo: 'bar_2'}), function() {
                   storage.get(['get/existing-many-foo_1-d', 'get/existing-many-foo_2-d'], function(err, storage_response) {
-                    storage_response = Array.create(storage_response).map(function(doc) { return Object.reject(doc, meta_fields) });
+                    storage_response = Array.create(storage_response).map(function(doc) { return Object.reject(doc, meta_fields); });
                     assert.deepEqual ( storage_response, [{foo: 'bar_1'}, {foo: 'bar_2'}] );
                     done();
                   });
