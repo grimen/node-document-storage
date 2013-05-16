@@ -2,7 +2,7 @@
   "name": "node-document-storage",
   "description": "Storage adapter interface for `node-document` ODM for Node.js.",
   "keywords": ["document", "odm", "object document mapper", "generic", "unified", "storage", "store", "persistance", "adapter", "interface"],
-  "version": "0.1.0-pre4",
+  "version": "0.1.0-pre5",
   "homepage": "https://github.com/grimen/node-document-storage",
   "repository": {
     "type": "git",
