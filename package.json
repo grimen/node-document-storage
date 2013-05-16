@@ -53,6 +53,7 @@
     "cover": "latest",
     "node-inspector": "latest",
     "longjohn": "latest",
-    "colors": "latest"
+    "colors": "latest",
+    "node-env-flag": "latest"
   }
 }
