@@ -202,14 +202,41 @@ module.exports = {
 
           assert.lengthOf ( storage.queue, 3 );
 
-          assert.deepEqual (
-            storage.queue,
-            [
-              ['set', 'post/1', {foo: 'bar'}, {}, callback],
-              ['get', 'post/1', {}, callback],
-              ['del', 'post/1', {}, callback]
-            ]
-          );
+          // NOTE: For some reason this assertion fails when using `deepEqual` - didn't in the past. =S
+
+          // assert.deepEqual (
+          //   storage.queue,
+          //   [
+          //     ['set', 'post/1', {foo: 'bar'}, {}, callback],
+          //     ['get', 'post/1', {}, callback],
+          //     ['del', 'post/1', {}, callback]
+          //   ]
+          // );
+
+          assert.typeOf ( storage.queue, 'array' );
+          assert.lengthOf ( storage.queue, 3 );
+
+          assert.typeOf    ( storage.queue[0], 'array' );
+          assert.lengthOf  ( storage.queue[0], 5 );
+          assert.deepEqual ( storage.queue[0][0], 'set' );
+          assert.deepEqual ( storage.queue[0][1], 'post/1' );
+          assert.deepEqual ( storage.queue[0][2], {foo: 'bar'} );
+          assert.deepEqual ( storage.queue[0][3], {} );
+          assert.equal     ( storage.queue[0][4], callback );
+
+          assert.typeOf    ( storage.queue[1], 'array' );
+          assert.lengthOf  ( storage.queue[1], 4 );
+          assert.deepEqual ( storage.queue[1][0], 'get' );
+          assert.deepEqual ( storage.queue[1][1], 'post/1' );
+          assert.deepEqual ( storage.queue[1][2], {} );
+          assert.equal     ( storage.queue[1][3], callback );
+
+          assert.typeOf    ( storage.queue[2], 'array' );
+          assert.lengthOf  ( storage.queue[2], 4 );
+          assert.deepEqual ( storage.queue[2][0], 'del' );
+          assert.deepEqual ( storage.queue[2][1], 'post/1' );
+          assert.deepEqual ( storage.queue[2][2], {} );
+          assert.equal     ( storage.queue[2][3], callback );
         }
       },
 
