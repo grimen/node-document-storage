@@ -5,3 +5,7 @@ script:
   - "make test-ci"
 notifications:
   email: false
+branches:
+  only:
+    - master
+    - dev
