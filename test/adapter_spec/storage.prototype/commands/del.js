@@ -18,7 +18,7 @@ module.exports = function(spec) {
     },
 
     '#del': {
-      'one': {
+      'by id: one': {
         '<NEW_KEY>': {
           "(<NEW_KEY>)  =>  [false]": function(done) {
             storage.del('del/new-one-foo_1-a', function(storage_err, storage_response) {
@@ -72,7 +72,7 @@ module.exports = function(spec) {
         } // [<EXISTING_KEY>]
       }, // one
 
-      'many': {
+      'by id: many': {
         '[<NEW_KEY>, <NEW_KEY>]': {
           "([<NEW_KEY>, <NEW_KEY>])  =>  [false, false]": function(done) {
             storage.del(['del/new-many-foo_1-a', 'del/new-many-foo_2-a'], function(storage_err, storage_response) {
@@ -136,7 +136,127 @@ module.exports = function(spec) {
             });
           }
         } // [<EXISTING_KEY>, <EXISTING_KEY>]
-      } // many
+      }, // many
+
+      'by type': {
+        '<NEW_TYPE> - no types exist': {
+          "(<NEW_TYPE>)  =>  [<COUNT>]": function(done) {
+            spec.client.clear(spec.db, undefined, function() {
+              storage.del('del1', function(err, storage_response) {
+                assert.deepEqual ( storage_response, [0] );
+                done();
+              });
+            });
+          }
+        },
+
+        '<NEW_TYPE> - types exist': {
+          "(<NEW_TYPE>)  =>  [<COUNT>]": function(done) {
+            spec.client.clear(spec.db, undefined, function() {
+              spec.client.set(spec.db, 'del1', 'existing-allbytype-foo_1-a', spec.pack({foo: 'existing-allbytype-foo_1-a'}), function() {
+                spec.client.set(spec.db, 'del2', 'existing-allbytype-foo_2-a', spec.pack({foo: 'existing-allbytype-foo_2-a'}), function() {
+                  storage.del('del3', function(err, storage_response) {
+                    assert.deepEqual ( storage_response, [0] );
+                    done();
+                  });
+                });
+              });
+            });
+          }
+        },
+
+        '<EXISTING_TYPE> - types exist, 1 of specified type': {
+          "(<EXISTING_TYPE>)  =>  [<COUNT>]": function(done) {
+            spec.client.clear(spec.db, undefined, function() {
+              spec.client.set(spec.db, 'del1', 'existing-allbytype-foo_1-b', spec.pack({foo: 'existing-allbytype-foo_1-b'}), function() {
+                spec.client.set(spec.db, 'del2', 'existing-bllbytype-foo_1-b', spec.pack({foo: 'existing-allbytype-foo_1-b'}), function() {
+                  storage.del('del2', function(err, storage_response) {
+                    assert.deepEqual ( storage_response, [1] );
+                    done();
+                  });
+                });
+              });
+            });
+          }
+        },
+
+        '<EXISTING_TYPE> - types exist, * of specified type': {
+          "(<EXISTING_TYPE>)  =>  [<COUNT>]": function(done) {
+            spec.client.clear(spec.db, undefined, function() {
+              spec.client.set(spec.db, 'del1', 'existing-allbytype-foo_1-c', spec.pack({foo: 'existing-allbytype-foo_1-c'}), function() {
+                spec.client.set(spec.db, 'del2', 'existing-allbytype-foo_1-c', spec.pack({foo: 'existing-allbytype-foo_1-c'}), function() {
+                  spec.client.set(spec.db, 'del2', 'existing-allbytype-foo_2-c', spec.pack({foo: 'existing-allbytype-foo_2-c'}), function() {
+                    storage.del('del2', function(err, storage_response) {
+                      assert.deepEqual ( storage_response, [2] );
+                      done();
+                    });
+                  });
+                });
+              });
+            });
+          }
+        }
+      },
+
+      'all': {
+        'no types exist': {
+          "()  =>  [<COUNT>]": function(done) {
+            spec.client.clear(spec.db, undefined, function() {
+              storage.del(function(err, storage_response) {
+                assert.deepEqual ( storage_response, [0] );
+                done();
+              });
+            });
+          }
+        },
+
+        'types exist': {
+          "()  =>  [<COUNT>]": function(done) {
+            spec.client.clear(spec.db, undefined, function() {
+              spec.client.set(spec.db, 'del1', 'existing-all-foo_1-a', spec.pack({foo: 'existing-all-foo_1-a'}), function() {
+                spec.client.set(spec.db, 'del2', 'existing-all-foo_2-a', spec.pack({foo: 'existing-all-foo_2-a'}), function() {
+                  storage.del(function(err, storage_response) {
+                    assert.deepEqual ( storage_response, [0] );
+                    done();
+                  });
+                });
+              });
+            });
+          }
+        },
+
+        'types exist, 1 of specified type': {
+          "()  =>  [<COUNT>]": function(done) {
+            spec.client.clear(spec.db, undefined, function() {
+              spec.client.set(spec.db, 'del1', 'existing-all-foo_1-b', spec.pack({foo: 'existing-all-foo_1-b'}), function() {
+                spec.client.set(spec.db, 'del2', 'existing-bllbytype-foo_1-b', spec.pack({foo: 'existing-all-foo_1-b'}), function() {
+                  storage.del(function(err, storage_response) {
+                    assert.deepEqual ( storage_response, [1] );
+                    done();
+                  });
+                });
+              });
+            });
+          }
+        },
+
+        'types exist, * of specified type': {
+          "()  =>  [<COUNT>]": function(done) {
+            spec.client.clear(spec.db, undefined, function() {
+              spec.client.set(spec.db, 'del1', 'existing-all-foo_1-c', spec.pack({foo: 'existing-all-foo_1-c'}), function() {
+                spec.client.set(spec.db, 'del2', 'existing-all-foo_1-c', spec.pack({foo: 'existing-all-foo_1-c'}), function() {
+                  spec.client.set(spec.db, 'del2', 'existing-all-foo_2-c', spec.pack({foo: 'existing-all-foo_2-c'}), function() {
+                    storage.del(function(err, storage_response) {
+                      assert.deepEqual ( storage_response, [2] );
+                      done();
+                    });
+                  });
+                });
+              });
+            });
+          }
+        }
+      }
     } // #del
   }
 };

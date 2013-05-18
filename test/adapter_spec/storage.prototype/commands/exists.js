@@ -18,7 +18,7 @@ module.exports = function(spec) {
     },
 
     '#exists': {
-      'one': {
+      'by id: one': {
         '<NEW_KEY>': {
           "(<NEW_KEY>)  =>  [false]": function(done) {
             storage.exists('exists/new-one-foo_1-a', function(err, storage_response) {
@@ -60,7 +60,7 @@ module.exports = function(spec) {
         } // [<EXISTING_KEY>]
       }, // oned
 
-      'many': {
+      'by id: many': {
         '[<NEW_KEY>, <NEW_KEY>]': {
           "([<NEW_KEY>, <NEW_KEY>])  =>  [false, false]": function(done) {
             storage.exists(['exists/new-many-foo_1-a', 'exists/new-many-foo_2-a'], function(err, storage_response) {
@@ -104,7 +104,97 @@ module.exports = function(spec) {
             });
           }
         } // [<EXISTING_KEY>, <EXISTING_KEY>]
-      } // many
+      }, // many
+
+      'by type': {
+        '<NEW_TYPE> - no types exist': {
+          "(<NEW_TYPE>)  =>  []": function(done) {
+            spec.client.clear(spec.db, undefined, function() {
+              storage.exists('exists', function(err, storage_response) {
+                assert.deepEqual ( storage_response, [false] );
+                done();
+              });
+            });
+          }
+        },
+
+        '<NEW_TYPE> - types exist': {
+          "(<NEW_TYPE>)  =>  []": function(done) {
+            spec.client.clear(spec.db, undefined, function() {
+              spec.client.set(spec.db, 'exists1', 'existing-exists1-foo_1-a', spec.pack({foo: 'existing-exists1-foo_1-a'}), function() {
+                spec.client.set(spec.db, 'exists2', 'existing-exists2-foo_2-a', spec.pack({foo: 'existing-exists2-foo_2-a'}), function() {
+                  storage.exists('exists-3', function(err, storage_response) {
+                    assert.deepEqual ( storage_response, [false] );
+                    done();
+                  });
+                });
+              });
+            });
+          }
+        },
+
+        '<EXISTING_TYPE> - types exist, 1 of specified type': {
+          "(<EXISTING_TYPE>)  =>  [<VALUE>]": function(done) {
+            spec.client.clear(spec.db, undefined, function() {
+              spec.client.set(spec.db, 'exists1', 'existing-exists1-foo_1-b', spec.pack({foo: 'existing-exists1-foo_1-b'}), function() {
+                spec.client.set(spec.db, 'exists2', 'existing-exists2-foo_1-b', spec.pack({foo: 'existing-exists2-foo_1-b'}), function() {
+                  storage.exists('exists2', function(err, storage_response) {
+                    assert.deepEqual ( storage_response, [true] );
+                    done();
+                  });
+                });
+              });
+            });
+          }
+        },
+
+        '<EXISTING_TYPE> - types exist, * of specified type': {
+          "(<EXISTING_TYPE>)  =>  [<VALUE>, <VALUE>]": function(done) {
+            spec.client.clear(spec.db, undefined, function() {
+              spec.client.set(spec.db, 'exists1', 'existing-exists1-foo_1-c', spec.pack({foo: 'existing-exists1-foo_1-c'}), function() {
+                spec.client.set(spec.db, 'exists2', 'existing-exists2-foo_1-c', spec.pack({foo: 'existing-exists2-foo_1-c'}), function() {
+                  spec.client.set(spec.db, 'exists2', 'existing-exists2-foo_2-c', spec.pack({foo: 'existing-exists2-foo_2-c'}), function() {
+                    storage.exists('exists2', function(err, storage_response) {
+                      assert.deepEqual ( storage_response, [true] );
+                      done();
+                    });
+                  });
+                });
+              });
+            });
+          }
+        }
+      },
+
+      // REVIEW:
+      //
+      // 'all': {
+      //   'no types exist': {
+      //     "()  =>  []": function(done) {
+      //       spec.client.clear(spec.db, undefined, function() {
+      //         storage.exists(function(err, storage_response) {
+      //           assert.deepEqual ( storage_response, [] );
+      //           done();
+      //         });
+      //       });
+      //     }
+      //   },
+      //
+      //   'types exist': {
+      //     "()  =>  [<VALUE>]": function(done) {
+      //       spec.client.clear(spec.db, undefined, function() {
+      //         spec.client.set(spec.db, 'exists1', 'existing-exists1-foo_1-a', spec.pack({foo: 'existing-exists1-foo_1-a'}), function() {
+      //           spec.client.set(spec.db, 'exists2', 'existing-exists2-foo_2-a', spec.pack({foo: 'existing-exists2-foo_2-a'}), function() {
+      //             storage.exists(function(err, storage_response) {
+      //               assert.deepEqual ( storage_response, [{foo: 'existing-exists1-foo_1-a'}, {foo: 'existing-exists2-foo_2-a'}] );
+      //               done();
+      //             });
+      //           });
+      //         });
+      //       });
+      //     }
+      //   }
+      // }
     } // #exists
   }
 };

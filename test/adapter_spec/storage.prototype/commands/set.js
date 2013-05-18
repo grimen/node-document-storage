@@ -18,7 +18,7 @@ module.exports = function(spec) {
     },
 
     '#set': {
-      'one': {
+      'by id: one': {
         '<NEW_KEY>': {
           "(<STRING_KEY>, <VALUE>)  =>  [true]": function(done) {
             storage.set('set/new-one-foo_1-a', {foo: 'bar_1'}, function(storage_err, storage_response) {
@@ -46,7 +46,7 @@ module.exports = function(spec) {
         } // [<NEW_KEY>]
       },
 
-      'many': {
+      'by id: many': {
         '[<NEW_KEY>, <NEW_KEY]': {
           "([<STRING_KEY_1>, <STRING_KEY_2>], [<VALUE_1>, <VALUE_2>])  =>  [true, true]": function(done) {
             storage.set(['set/new-many-foo_1-c', 'set/new-many-foo_2-c'], [{foo: 'bar_1'}, {foo: 'bar_2'}], function(storage_err, storage_response) {

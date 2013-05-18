@@ -43,7 +43,9 @@ module.exports = function(spec) {
         require('./storage.prototype/commands/get')(spec),
         require('./storage.prototype/commands/set')(spec),
         require('./storage.prototype/commands/del')(spec),
-        require('./storage.prototype/commands/exists')(spec)
+        require('./storage.prototype/commands/exists')(spec),
+        require('./storage.prototype/commands/clear')(spec),
+        require('./storage.prototype/commands/count')(spec)
       ]
     } // Storage.prototype
   }
